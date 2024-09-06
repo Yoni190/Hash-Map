@@ -42,11 +42,13 @@ class HashMap
   def remove(key)
     returned = nil
     index = get_index(key)
-    if @@bucket[index].nil?
+    value = get(key)
+    if @@bucket[index].nil? || value.nil?
       returned = nil
     else
-      returned = @@bucket[index][key]
-      @@bucket[index] = nil
+      entry_index = @@bucket[index].find(key => value)
+      @@bucket[index].remove_at(entry_index)
+      returned = value
     end
     returned
   end
@@ -90,9 +92,3 @@ class HashMap
     index
   end
 end
-h1 = HashMap.new
-h1.set("sara", "yoni")
-h1.set("rasa", "kali")
-h1.set("suii", "cr7")
-h1.set("iusis", "mes")
-puts h1.has?("aras")
