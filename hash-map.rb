@@ -1,5 +1,7 @@
+require_relative 'lib/linked_list'
 class HashMap
   @@bucket = Array.new(16)
+  
 
   def hash(key)
     hash_code = 0
@@ -11,12 +13,20 @@ class HashMap
 
   def set(key, value)
     index = get_index(key)
-    @@bucket[index] = {key => value}
+    if @@bucket[index].nil?
+      list = LinkedList.new
+      list.append(key => value)
+    else
+      list = @@bucket[index]
+      list.append(key => value)
+    end
+    @@bucket[index] = list
   end
 
   def get(key)
     index = get_index(key)
-    @@bucket[index].nil? ? nil : @@bucket[index][key]
+
+    @@bucket[index].nil? ? nil : @@bucket[index].find_entry(key)
   end
 
   def has?(key)
@@ -75,3 +85,7 @@ class HashMap
     index
   end
 end
+h1 = HashMap.new
+h1.set("sara", "yoni")
+h1.set("rasa", "kali")
+puts h1.get("rasa")
