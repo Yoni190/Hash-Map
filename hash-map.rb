@@ -24,6 +24,18 @@ class HashMap
     @@bucket[index].nil? ? false : true
   end
 
+  def remove(key)
+    returned = nil
+    index = get_index(key)
+    if @@bucket[index].nil?
+      returned = nil
+    else
+      returned = @@bucket[index][key]
+      @@bucket[index] = nil
+    end
+    returned
+  end
+
   private
 
   def get_index(key)
