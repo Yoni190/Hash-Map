@@ -54,6 +54,19 @@ class HashMap
     values.flatten
   end
 
+  def entries
+    entries = []
+    entry_keys = keys
+    entry_values = values
+    i = 0
+
+    while i < entry_keys.length
+      entries.push([entry_keys[i], entry_values[i]])
+      i += 1
+    end
+    entries
+  end
+
   private
 
   def get_index(key)
