@@ -40,6 +40,10 @@ class HashMap
     @@bucket.compact.length
   end
 
+  def clear
+    @@bucket = Array.new(16)
+  end
+
   private
 
   def get_index(key)
