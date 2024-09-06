@@ -36,6 +36,10 @@ class HashMap
     returned
   end
 
+  def length
+    @@bucket.compact.length
+  end
+
   private
 
   def get_index(key)
