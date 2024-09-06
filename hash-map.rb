@@ -10,14 +10,25 @@ class HashMap
   end
 
   def set(key, value)
-    hash_code = hash(key)
-    index = hash_code % 16
+    index = get_index(key)
     @@bucket[index] = {key => value}
   end
 
   def get(key)
+    index = get_index(key)
+    @@bucket[index].nil? ? nil : @@bucket[index][key]
+  end
+
+  def has?(key)
+    index = get_index(key)
+    @@bucket[index].nil? ? false : true
+  end
+
+  private
+
+  def get_index(key)
     hash_code = hash(key)
     index = hash_code % 16
-    @@bucket[index].nil? ? nil : @@bucket[index][key]
+    index
   end
 end
