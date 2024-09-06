@@ -32,6 +32,11 @@ class HashMap
   def has?(key)
     index = get_index(key)
     @@bucket[index].nil? ? false : true
+    if @@bucket[index].nil?
+      false
+    elsif get(key) != nil
+      true
+    end
   end
 
   def remove(key)
@@ -88,4 +93,6 @@ end
 h1 = HashMap.new
 h1.set("sara", "yoni")
 h1.set("rasa", "kali")
-puts h1.get("rasa")
+h1.set("suii", "cr7")
+h1.set("iusis", "mes")
+puts h1.has?("aras")
