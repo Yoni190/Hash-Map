@@ -44,6 +44,11 @@ class HashMap
     @@bucket = Array.new(16)
   end
 
+  def keys
+    keys = @@bucket.compact.map { |entry| entry.keys }
+    keys.flatten
+  end
+
   private
 
   def get_index(key)
@@ -52,3 +57,8 @@ class HashMap
     index
   end
 end
+h1 = HashMap.new
+h1.set("a", "yoni")
+puts h1.keys
+h1.set("b", "ka")
+p h1.keys
