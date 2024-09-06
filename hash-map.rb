@@ -54,7 +54,9 @@ class HashMap
   end
 
   def length
-    @@bucket.compact.length
+    length = 0
+    @@bucket.compact.each { |entry| length += entry.size}
+    length
   end
 
   def clear
@@ -92,3 +94,4 @@ class HashMap
     index
   end
 end
+
