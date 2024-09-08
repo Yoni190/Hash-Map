@@ -2,6 +2,9 @@ require_relative 'lib/linked_list'
 class HashMap
   @@bucket = Array.new(16)
   
+  def gb
+    @@bucket
+  end
 
   def hash(key)
     hash_code = 0
@@ -74,16 +77,8 @@ class HashMap
   end
 
   def entries
-    entries = []
-    entry_keys = keys
-    entry_values = values
-    i = 0
-
-    while i < entry_keys.length
-      entries.push([entry_keys[i], entry_values[i]])
-      i += 1
-    end
-    entries
+    entries = @@bucket.compact.map { |entry| entry.get_values}
+    entries.flatten
   end
 
   private
@@ -94,4 +89,10 @@ class HashMap
     index
   end
 end
-
+h1 = HashMap.new
+h1.set("sara", "yoni")
+h1.set("rasa", "kali")
+h1.set("suii", "cr7")
+h1.set("iusis", "mes")
+puts h1.gb
+p h1.entries

@@ -100,16 +100,16 @@ class LinkedList
     return nil
   end
 
-  def to_s
-    list = ""
-    temp = head
-    until temp.nil?
-      list += "(#{temp.value}) -> "
-      temp = temp.next_node
-    end
-    list += "nil"
-    list
-  end
+ # def to_s
+  #  list = ""
+   # temp = head
+ #   until temp.nil?
+  #    list += "(#{temp.value}) -> "
+   #   temp = temp.next_node
+  #  end
+  #  list += "nil"
+   # list
+ # end
 
   def insert(value, index)
     temp = head
@@ -141,5 +141,15 @@ class LinkedList
       end
       temp.next_node = temp.next_node.next_node
     end
+  end
+
+  def get_values
+    values = []
+    temp = head
+    while temp != nil
+      values.push(temp.value)
+      temp = temp.next_node
+    end
+    values
   end
 end
