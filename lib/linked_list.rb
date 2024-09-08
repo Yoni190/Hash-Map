@@ -100,16 +100,16 @@ class LinkedList
     return nil
   end
 
- # def to_s
-  #  list = ""
-   # temp = head
- #   until temp.nil?
-  #    list += "(#{temp.value}) -> "
-   #   temp = temp.next_node
-  #  end
-  #  list += "nil"
-   # list
- # end
+  def to_s
+    list = ""
+    temp = head
+    until temp.nil?
+      list += "(#{temp.value}) -> "
+      temp = temp.next_node
+    end
+    list += "nil"
+    list
+  end
 
   def insert(value, index)
     temp = head
@@ -151,5 +151,11 @@ class LinkedList
       temp = temp.next_node
     end
     values
+  end
+
+  def replace(old_value, new_value)
+    index = find(old_value)
+    remove_at(index)
+    insert(new_value, index)
   end
 end

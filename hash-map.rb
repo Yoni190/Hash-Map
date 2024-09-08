@@ -1,6 +1,8 @@
 require_relative 'lib/linked_list'
 class HashMap
-  @@bucket = Array.new(16)
+  @capacity = 16
+  @load_factor = 0.75
+  @@bucket = Array.new(@capacity)
   
 
   def hash(key)
@@ -18,7 +20,12 @@ class HashMap
       list.append(key => value)
     else
       list = @@bucket[index]
-      list.append(key => value)
+      if get_keys.include?(key)
+        old_value = get(key)
+        list.replace({key => old_value}, {key => value})
+      else
+        list.append(key => value)
+      end
     end
     @@bucket[index] = list
   end
@@ -88,10 +95,20 @@ class HashMap
     index
   end
 end
-h1 = HashMap.new
-h1.set("sara", "yoni")
-h1.set("rasa", "kali")
-h1.set("suii", "cr7")
-h1.set("iusis", "mes")
-p h1.get_keys
-p h1.get_values
+test = HashMap.new
+test.set('apple', 'red')
+test.set('banana', 'yellow')
+test.set('carrot', 'orange')
+test.set('dog', 'brown')
+test.set('elephant', 'gray')
+test.set('frog', 'green')
+test.set('grape', 'purple')
+test.set('hat', 'black')
+test.set('ice cream', 'white')
+test.set('jacket', 'blue')
+test.set('kite', 'pink')
+test.set('lion', 'golden')
+puts test.get_entries
+test.set('apple', 'blue')
+test.set('lion', 'suiii')
+puts test.get_entries
