@@ -1,10 +1,13 @@
 require_relative 'lib/linked_list'
 class HashMap
-  @capacity = 16
-  @load_factor = 0.75
-  @@bucket = Array.new(@capacity)
-  
 
+  attr_accessor :capacity, :load_factor, :bucket
+  def initialize
+    self.capacity = 16
+    self.load_factor = 0.75
+    self.bucket = Array.new(self.capacity)
+  end
+  
   def hash(key)
     hash_code = 0
     prime_number = 31
@@ -15,11 +18,17 @@ class HashMap
 
   def set(key, value)
     index = get_index(key)
-    if @@bucket[index].nil?
+    if self.capacity * self.load_factor <= length
+      temp = self.bucket
+      self.capacity *= 2
+      self.bucket = Array.new(self.capacity).slice!(0..temp.length-1)
+      self.bucket = temp + bucket
+    end
+    if self.bucket[index].nil?
       list = LinkedList.new
       list.append(key => value)
     else
-      list = @@bucket[index]
+      list = self.bucket[index]
       if get_keys.include?(key)
         old_value = get(key)
         list.replace({key => old_value}, {key => value})
@@ -27,19 +36,19 @@ class HashMap
         list.append(key => value)
       end
     end
-    @@bucket[index] = list
+    self.bucket[index] = list
   end
 
   def get(key)
     index = get_index(key)
 
-    @@bucket[index].nil? ? nil : @@bucket[index].find_entry(key)
+    self.bucket[index].nil? ? nil : self.bucket[index].find_entry(key)
   end
 
   def has?(key)
     index = get_index(key)
-    @@bucket[index].nil? ? false : true
-    if @@bucket[index].nil?
+    self.bucket[index].nil? ? false : true
+    if self.bucket[index].nil?
       false
     elsif get(key) != nil
       true
@@ -50,11 +59,11 @@ class HashMap
     returned = nil
     index = get_index(key)
     value = get(key)
-    if @@bucket[index].nil? || value.nil?
+    if self.bucket[index].nil? || value.nil?
       returned = nil
     else
-      entry_index = @@bucket[index].find(key => value)
-      @@bucket[index].remove_at(entry_index)
+      entry_index = self.bucket[index].find(key => value)
+      self.bucket[index].remove_at(entry_index)
       returned = value
     end
     returned
@@ -62,12 +71,12 @@ class HashMap
 
   def length
     length = 0
-    @@bucket.compact.each { |entry| length += entry.size}
+    self.bucket.compact.each { |entry| length += entry.size}
     length
   end
 
   def clear
-    @@bucket = Array.new(16)
+    self.bucket = Array.new(16)
   end
 
   def get_keys
@@ -83,7 +92,7 @@ class HashMap
   end
 
   def get_entries
-    entries = @@bucket.compact.map { |entry| entry.get_values}
+    entries = self.bucket.compact.map { |entry| entry.get_values}
     entries.flatten
   end
 
@@ -108,7 +117,4 @@ test.set('ice cream', 'white')
 test.set('jacket', 'blue')
 test.set('kite', 'pink')
 test.set('lion', 'golden')
-puts test.get_entries
-test.set('apple', 'blue')
-test.set('lion', 'suiii')
-puts test.get_entries
+test.set("sow", "mewo")
