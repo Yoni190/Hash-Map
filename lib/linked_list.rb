@@ -91,13 +91,12 @@ class LinkedList
 
   def find_entry(key)
     temp = head
-    while temp != nil
-      if temp.value.keys.include?(key)
-        return temp.value.values[0]
-      end
+    until temp.nil?
+      return temp.value.values[0] if temp.value.keys.include?(key)
+
       temp = temp.next_node
     end
-    return nil
+    nil
   end
 
   def to_s
@@ -146,7 +145,7 @@ class LinkedList
   def get_values
     values = []
     temp = head
-    while temp != nil
+    until temp.nil?
       values.push(temp.value)
       temp = temp.next_node
     end
